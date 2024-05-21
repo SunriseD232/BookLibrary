@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      padding-top: 60px; /* Отступ сверху для кнопки */
+    }
+    .book-card {
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .btn-book {
+      margin-top: 10px;
+    }
+    .btn-view-booking {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="/booking" class="btn btn-success btn-view-booking">View Booking</a>
+
+  <div class="row">
+    <div class="col-md-6" th:each="book : ${books}">
+      <div class="book-card">
+        <h5 th:text="${book.title}"></h5>
+        <p th:text="'Author: ' + ${book.author}"></p>
+        <p th:text="'Year: ' + ${book.year}"></p>
+        <p th:text="'Pages: ' + ${book.pages}"></p>
+        <p th:text="'In Stock: ' + ${book.count}"></p>
+        <a href="#" class="btn btn-primary btn-book" th:data-book-id="${book.id}">Book</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".btn-book").click(function() {
+      var bookId = $(this).data("book-id");
+      var userId = 1; // Замените на реальный идентификатор пользователя
+      $.post("/add-to-booking?userId=" + encodeURIComponent(userId) + "&bookId=" + encodeURIComponent(bookId), function(data) {
+        alert(data);
+      });
+    });
+  });
+</script>
+</body>
+</html>
