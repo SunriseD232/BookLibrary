@@ -1,8 +1,7 @@
-package com.example.userlib.services.User.Service;
-
+package com.example.userlib.services;
 
 import com.example.userlib.repository.UserRepository;
-import com.example.userlib.services.User.UserImpl;
+import com.example.userlib.implementation.User.UserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,10 @@
-package com.example.userlib.services.Booking;
+package com.example.userlib.implementation.Booking;
 
-import com.example.userlib.services.User.UserImpl;
-import com.example.userlib.services.book.Book;
+import com.example.userlib.implementation.book.Book;
+import com.example.userlib.implementation.User.UserImpl;
 import java.time.LocalDate;
 import lombok.Data;
-
 import javax.persistence.*;
-import net.bytebuddy.asm.Advice.Local;
 
 @Entity
 @Data
@@ -27,7 +25,6 @@ public class Booking {
   private LocalDate endBookingDate;
 
   public Booking(){
-
   }
 
   public Booking(UserImpl user, Book book, LocalDate bookingDate, LocalDate endBookingDate){

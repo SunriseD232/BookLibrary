@@ -1,7 +1,7 @@
-package com.example.userlib.controller;
+package com.example.userlib.Controller;
 
-import com.example.userlib.services.book.Book;
-import com.example.userlib.services.book.BookService;
+import com.example.userlib.implementation.book.Book;
+import com.example.userlib.services.BookService;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

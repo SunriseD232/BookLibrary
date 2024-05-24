@@ -1,4 +1,4 @@
-package com.example.userlib.services.User;
+package com.example.userlib.implementation.User;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

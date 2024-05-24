@@ -63,6 +63,7 @@
 <body>
 <div class="profile-container">
   <h1>Профиль</h1>
+  <td>Бронь</td>
   <table>
     <tr>
       <th>Название</th>
@@ -75,6 +76,21 @@
       <td th:text="${booking.book.author}"></td>
       <td th:text="${booking.bookingDate}"></td>
       <td th:text="${booking.endBookingDate}"></td>
+    </tr>
+  </table>
+  <td>Выданы:</td>
+  <table>
+    <tr>
+      <th>Название</th>
+      <th>Автор</th>
+      <th>Дата бронирования</th>
+      <th>Дата окончания бронирования</th>
+    </tr>
+    <tr th:each="bookGivenAway : ${booksGivenAway}">
+      <td th:text="${bookGivenAway.book.title}"></td>
+      <td th:text="${bookGivenAway.book.author}"></td>
+      <td th:text="${bookGivenAway.givenAwayDate}"></td>
+      <td th:text="${bookGivenAway.returnDate}"></td>
     </tr>
   </table>
   <a href="/" class="btn btn-primary btn-back">Назад к поиску</a>

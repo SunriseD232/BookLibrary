@@ -1,7 +1,8 @@
-package com.example.userlib.controller;
+package com.example.userlib.Controller;
 
-import com.example.userlib.services.User.UserImpl;
-import com.example.userlib.services.User.UserServiceImpl;
+import com.example.userlib.implementation.User.ROLE;
+import com.example.userlib.implementation.User.UserImpl;
+import com.example.userlib.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,8 @@ public class AuthController {
 
   @PostMapping("/register")
   public String registerUser(@ModelAttribute UserImpl user){
+    user.setRole(ROLE.USER);
+
     userService.saveUser(user);
     return  "redirect:/login";
   }

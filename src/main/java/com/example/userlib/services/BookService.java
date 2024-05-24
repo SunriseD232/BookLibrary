@@ -1,6 +1,7 @@
-package com.example.userlib.services.book;
+package com.example.userlib.services;
 
 import com.example.userlib.repository.BookRepository;
+import com.example.userlib.implementation.book.Book;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,5 @@ public class BookService {
 
   public List<Book> findAll(){
     return bookRepository.findAll();
-  }
-
-  public Book findById(Long bookId) {
-    return bookRepository.findFirstById(bookId);
   }
 }

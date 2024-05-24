@@ -1,6 +1,6 @@
 package com.example.userlib.repository;
 
-import com.example.userlib.services.book.Book;
+import com.example.userlib.implementation.book.Book;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

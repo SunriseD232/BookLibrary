@@ -1,4 +1,4 @@
-package com.example.userlib.services.book;
+package com.example.userlib.implementation.book;
 
 import java.util.Date;
 import javax.persistence.Column;

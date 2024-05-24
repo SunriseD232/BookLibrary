@@ -18,7 +18,14 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px; /* Уменьшен отступ снизу */
+    }
+
+    .username {
+      text-align: center;
+      font-size: 24px;
+      color: #666;
+      margin-bottom: 20px; /* Добавлен отступ снизу */
     }
 
     table {
@@ -45,6 +52,7 @@
       text-decoration: none;
       border-radius: 4px;
       transition: background-color 0.3s;
+      margin-right: 5px;
     }
 
     .btn:hover {
@@ -62,7 +70,8 @@
 </head>
 <body>
 <div class="profile-container">
-  <h1>Профиль</h1>
+  <h1>Профиль пользователя:</h1>
+  <div class="username" th:text="${username}"></div>
   <td>Бронь</td>
   <table>
     <tr>
@@ -70,12 +79,17 @@
       <th>Автор</th>
       <th>Дата бронирования</th>
       <th>Дата окончания бронирования</th>
+      <th>Действия</th>
     </tr>
     <tr th:each="booking : ${bookings}">
       <td th:text="${booking.book.title}"></td>
       <td th:text="${booking.book.author}"></td>
       <td th:text="${booking.bookingDate}"></td>
       <td th:text="${booking.endBookingDate}"></td>
+      <td>
+        <a href="#" th:class="'btn btn-primary btn-book'" th:data-booking-id="${booking.id}"
+           th:data-username="${username}">Выдать</a>
+      </td>
     </tr>
   </table>
   <td>Выданы:</td>
@@ -85,15 +99,49 @@
       <th>Автор</th>
       <th>Дата бронирования</th>
       <th>Дата окончания бронирования</th>
+      <th>Действия</th>
     </tr>
     <tr th:each="bookGivenAway : ${booksGivenAway}">
       <td th:text="${bookGivenAway.book.title}"></td>
       <td th:text="${bookGivenAway.book.author}"></td>
       <td th:text="${bookGivenAway.givenAwayDate}"></td>
       <td th:text="${bookGivenAway.returnDate}"></td>
+      <td>
+        <a href="#" th:class="'btn btn-primary btn-return'" th:data-bookgivenaway-id="${bookGivenAway.id}"
+           th:data-username="${username}">Вернуть</a>
+      </td>
     </tr>
   </table>
-  <a href="/" class="btn btn-primary btn-back">Назад к поиску</a>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".btn-return").click(function() {
+      var bookGivenAwayId = $(this).data("bookgivenaway-id");
+      var usernamevar = $(this).data("username");
+
+      $.post("/get-book?username=" + encodeURIComponent(usernamevar) + "&bookGivenAwayId=" + encodeURIComponent(bookGivenAwayId), function(data) {
+        location.reload();
+      });
+    });
+  });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".btn-book").click(function() {
+      var bookingId = $(this).data("booking-id");
+      var usernamevar = $(this).data("username");
+
+      $.post("/give-book?username=" + encodeURIComponent(usernamevar) + "&bookingId=" + encodeURIComponent(bookingId), function(data) {
+        location.reload();
+      });
+    });
+  });
+</script>
+
 </body>
 </html>

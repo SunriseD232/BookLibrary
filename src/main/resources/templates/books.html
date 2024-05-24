@@ -69,8 +69,8 @@
     $(".btn-book").click(function() {
       if (!$(this).hasClass("disabled")) {
         var bookId = $(this).data("book-id");
-        var userId = $(this).data("username");
-        $.post("/add-to-booking?username=" + encodeURIComponent(userId) + "&bookId=" + encodeURIComponent(bookId), function(data) {
+        var username = $(this).data("username");
+        $.post("/add-to-booking?username=" + encodeURIComponent(username) + "&bookId=" + encodeURIComponent(bookId), function(data) {
           console.log("Booking successful!");
           location.reload(); // Добавлен код для обновления страницы
         });
