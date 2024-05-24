@@ -32,13 +32,29 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    input[type="submit"] {
+    button[type="submit"] {
       background-color: #4CAF50;
       color: white;
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+    }
+    .btn-faq, .btn-profile {
+      position: fixed;
+      top: 10px;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-faq {
+      left: 10px;
+    }
+    .btn-profile {
+      right: 10px;
     }
   </style>
 </head>
@@ -47,10 +63,25 @@
   <h1>Поиск книг</h1>
   <form action="/books" method="POST">
     <div class="form-group">
-      <input type="text" class="form-control" name="keyword" placeholder="Search by title">
+      <input type="text" class="form-control" name="keyword" placeholder="Найти по названию">
     </div>
-    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="submit">Поиск</button>
   </form>
 </div>
+
+<button class="btn-faq" onclick="redirectToFAQ()">FAQ</button>
+<button class="btn-profile" onclick="redirectToProfile()">Профиль</button>
+
+<script>
+  function redirectToProfile() {
+    window.location.href = "/profile";
+  }
+</script>
+
+<script>
+  function redirectToFAQ() {
+    window.location.href = "/FAQ";
+  }
+</script>
 </body>
 </html>

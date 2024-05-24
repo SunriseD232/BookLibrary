@@ -1,53 +1,46 @@
 package com.example.userlib.controller;
 
 import com.example.userlib.services.Booking.Booking;
-import com.example.userlib.services.Booking.BookingService;
-import com.example.userlib.services.book.Book;
-import com.example.userlib.services.book.BookService;
-import com.example.userlib.services.user.UserImpl;
-import com.example.userlib.services.user.UserService;
-import java.util.Collections;
+import com.example.userlib.services.Booking.Service.BookingService;
+import com.example.userlib.services.User.UserImpl;
+import com.example.userlib.services.User.UserServiceImpl;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 public class BookingController {
+
   @Autowired
   private BookingService bookingService;
 
   @Autowired
-  private UserService userService;
+  private UserServiceImpl userService;
 
-  @Autowired
-  private BookService bookService;
-
-  @GetMapping("/booking")
-  public String showBookingPage(@RequestParam Long userId, Model model) {
-    System.out.println(userId);
-    UserImpl user = userService.findById(userId);
-    List<Booking> bookings = bookingService.getAllBookings();
-
-    model.addAttribute("bookings", bookings);
-    return "booking";
-  }
 
   @PostMapping("/add-to-booking")
-  public String addToBooking(@RequestParam Long userId, @RequestParam Long bookId) {
-    UserImpl user = userService.findById(userId);
-    Book book = bookService.findById(bookId);
+  public String bookBook(@RequestParam String username, @RequestParam Long bookId) {
 
-    Booking booking = new Booking();
-    booking.setUser(user);
-    booking.setBooks(Collections.singletonList(book));
+    UserImpl user = userService.findUserByUsername(username);
+    if (user != null) {
+      bookingService.bookBook(user, bookId);
+    }
+    return "redirect:/profile";
+  }
 
-    bookingService.saveBooking(booking);
-
-    return "redirect:/booking";
+  @GetMapping("/profile")
+  public String showProfile(@AuthenticationPrincipal UserDetails userDetails, Model model){
+    System.out.println("getting user");
+    UserImpl user = userService.findUserByUsername(userDetails.getUsername());
+    System.out.println("Getting bookings");
+    List<Booking> bookings = bookingService.findBookingsByUser(user);
+    model.addAttribute("bookings", bookings);
+    return "profile";
   }
 }

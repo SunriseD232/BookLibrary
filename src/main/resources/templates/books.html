@@ -8,7 +8,7 @@
   <style>
     body {
       background-color: #f5f5f5;
-      padding-top: 60px; /* Отступ сверху для кнопки */
+      padding-top: 100px; /* Увеличен отступ сверху для верхнего бара */
     }
     .book-card {
       max-width: 400px;
@@ -21,18 +21,34 @@
     .btn-book {
       margin-top: 10px;
     }
-    .btn-view-booking {
+    .btn-view-booking, .btn-back {
       position: fixed;
       top: 10px;
-      right: 10px;
       z-index: 1000;
+    }
+    .btn-view-booking {
+      right: 10px;
+    }
+    .btn-back {
+      left: 10px;
+    }
+    .btn-book.disabled {
+      pointer-events: none;
+      opacity: 0.5;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <a href="/booking" class="btn btn-success btn-view-booking">View Booking</a>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <a href="/profile" class="btn btn-success btn-view-booking">Профиль</a>
+      <a href="/" class="btn btn-primary btn-back">Назад к поиску</a>
+    </div>
+  </div>
+</div>
 
+<div class="container">
   <div class="row">
     <div class="col-md-6" th:each="book : ${books}">
       <div class="book-card">
@@ -41,7 +57,7 @@
         <p th:text="'Year: ' + ${book.year}"></p>
         <p th:text="'Pages: ' + ${book.pages}"></p>
         <p th:text="'In Stock: ' + ${book.count}"></p>
-        <a href="#" class="btn btn-primary btn-book" th:data-book-id="${book.id}">Book</a>
+        <a href="#" th:class="${book.count == 0} ? 'btn btn-primary btn-book disabled' : 'btn btn-primary btn-book'" th:data-book-id="${book.id}", th:data-username="${username}">Забронировать</a>
       </div>
     </div>
   </div>
@@ -51,11 +67,14 @@
 <script>
   $(document).ready(function() {
     $(".btn-book").click(function() {
-      var bookId = $(this).data("book-id");
-      var userId = 1; // Замените на реальный идентификатор пользователя
-      $.post("/add-to-booking?userId=" + encodeURIComponent(userId) + "&bookId=" + encodeURIComponent(bookId), function(data) {
-        alert(data);
-      });
+      if (!$(this).hasClass("disabled")) {
+        var bookId = $(this).data("book-id");
+        var userId = $(this).data("username");
+        $.post("/add-to-booking?username=" + encodeURIComponent(userId) + "&bookId=" + encodeURIComponent(bookId), function(data) {
+          console.log("Booking successful!");
+          location.reload(); // Добавлен код для обновления страницы
+        });
+      }
     });
   });
 </script>

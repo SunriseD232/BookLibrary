@@ -1,11 +1,12 @@
 package com.example.userlib.services.Booking;
 
+import com.example.userlib.services.User.UserImpl;
 import com.example.userlib.services.book.Book;
-import com.example.userlib.services.user.UserImpl;
+import java.time.LocalDate;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import net.bytebuddy.asm.Advice.Local;
 
 @Entity
 @Data
@@ -15,8 +16,24 @@ public class Booking {
   private Long id;
 
   @ManyToOne
+  @JoinColumn(name = "user_id", nullable =false)
   private UserImpl user;
 
-  @ManyToMany
-  private List<Book> books;
+  @ManyToOne
+  @JoinColumn(name = "book_id", nullable = false)
+  private Book book;
+
+  private LocalDate bookingDate;
+  private LocalDate endBookingDate;
+
+  public Booking(){
+
+  }
+
+  public Booking(UserImpl user, Book book, LocalDate bookingDate, LocalDate endBookingDate){
+    this.user = user;
+    this.book = book;
+    this.bookingDate= bookingDate;
+    this.endBookingDate = endBookingDate;
+  }
 }
