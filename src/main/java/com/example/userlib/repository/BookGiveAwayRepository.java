@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BookGiveAwayRepository extends
     JpaRepository<BookGivenAwayImpl, Long>{
   List<BookGivenAwayImpl> findByUser(UserImpl user);
+  BookGivenAwayImpl findBookGivenAwayById (Long bookGivenAwayId);
 }

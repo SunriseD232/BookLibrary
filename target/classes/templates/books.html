@@ -8,7 +8,7 @@
   <style>
     body {
       background-color: #f5f5f5;
-      padding-top: 100px; /* Увеличен отступ сверху для верхнего бара */
+      padding-top: 100px;
     }
     .book-card {
       max-width: 400px;
@@ -53,10 +53,10 @@
     <div class="col-md-6" th:each="book : ${books}">
       <div class="book-card">
         <h5 th:text="${book.title}"></h5>
-        <p th:text="'Author: ' + ${book.author}"></p>
-        <p th:text="'Year: ' + ${book.year}"></p>
-        <p th:text="'Pages: ' + ${book.pages}"></p>
-        <p th:text="'In Stock: ' + ${book.count}"></p>
+        <p th:text="'Автор: ' + ${book.author}"></p>
+        <p th:text="'Год выпуска: ' + ${book.year}"></p>
+        <p th:text="'Количество страниц: ' + ${book.pages}"></p>
+        <p th:text="'В библиотеке: ' + ${book.count}"></p>
         <a href="#" th:class="${book.count == 0} ? 'btn btn-primary btn-book disabled' : 'btn btn-primary btn-book'" th:data-book-id="${book.id}", th:data-username="${username}">Забронировать</a>
       </div>
     </div>
@@ -72,7 +72,7 @@
         var username = $(this).data("username");
         $.post("/add-to-booking?username=" + encodeURIComponent(username) + "&bookId=" + encodeURIComponent(bookId), function(data) {
           console.log("Booking successful!");
-          location.reload(); // Добавлен код для обновления страницы
+          location.reload();
         });
       }
     });

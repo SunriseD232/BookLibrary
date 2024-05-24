@@ -1,5 +1,6 @@
 package com.example.userlib.services;
 
+import com.example.userlib.repository.BookGiveAwayRepository;
 import com.example.userlib.repository.BookRepository;
 import com.example.userlib.repository.BookingRepository;
 import com.example.userlib.implementation.Booking.Booking;
@@ -18,6 +19,9 @@ public class BookingService {
   @Autowired
   private BookRepository bookRepository;
 
+  @Autowired
+  private BookGiveAwayRepository bookGiveAwayRepository;
+
   public void bookBook(UserImpl user, Long bookId){
     Book book = bookRepository.findFirstById(bookId);
     if (book != null && book.getCount() > 0){
@@ -28,6 +32,8 @@ public class BookingService {
       bookingRepository.save(booking);
     }
   }
+
+
 
   public List<Booking> findBookingsByUser(UserImpl user){
     return bookingRepository.findByUser(user);

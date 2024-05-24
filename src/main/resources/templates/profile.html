@@ -18,7 +18,34 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px; /* Уменьшен отступ снизу */
+    }
+
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+      margin-bottom: 20px; /* Добавлен отступ снизу */
+    }
+
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      transition: 0.3s;
+    }
+
+    .tab button.active {
+      background-color: #ccc;
+    }
+
+    .tabcontent {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
     }
 
     table {
@@ -45,6 +72,7 @@
       text-decoration: none;
       border-radius: 4px;
       transition: background-color 0.3s;
+      margin-right: 5px;
     }
 
     .btn:hover {
@@ -52,48 +80,84 @@
     }
 
     .btn-back {
+      display: inline-block;
+      padding: 10px 20px;
       background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      margin-top: 20px; /* Добавлен отступ сверху */
     }
 
     .btn-back:hover {
       background-color: #0056b3;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
 <div class="profile-container">
   <h1>Профиль</h1>
-  <td>Бронь</td>
-  <table>
-    <tr>
-      <th>Название</th>
-      <th>Автор</th>
-      <th>Дата бронирования</th>
-      <th>Дата окончания бронирования</th>
-    </tr>
-    <tr th:each="booking : ${bookings}">
-      <td th:text="${booking.book.title}"></td>
-      <td th:text="${booking.book.author}"></td>
-      <td th:text="${booking.bookingDate}"></td>
-      <td th:text="${booking.endBookingDate}"></td>
-    </tr>
-  </table>
-  <td>Выданы:</td>
-  <table>
-    <tr>
-      <th>Название</th>
-      <th>Автор</th>
-      <th>Дата бронирования</th>
-      <th>Дата окончания бронирования</th>
-    </tr>
-    <tr th:each="bookGivenAway : ${booksGivenAway}">
-      <td th:text="${bookGivenAway.book.title}"></td>
-      <td th:text="${bookGivenAway.book.author}"></td>
-      <td th:text="${bookGivenAway.givenAwayDate}"></td>
-      <td th:text="${bookGivenAway.returnDate}"></td>
-    </tr>
-  </table>
+  <div class="tab" id="tab1">
+    <button class="tablinks active" onclick="openTab(event, 'table1')">Бронь</button>
+    <button class="tablinks" onclick="openTab(event, 'table2')">Выданы</button>
+  </div>
+
+  <div id="table1" class="tabcontent">
+    <table>
+      <tr>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Дата бронирования</th>
+        <th>Дата окончания бронирования</th>
+      </tr>
+      <tr th:each="booking : ${bookings}">
+        <td th:text="${booking.book.title}"></td>
+        <td th:text="${booking.book.author}"></td>
+        <td th:text="${booking.bookingDate}"></td>
+        <td th:text="${booking.endBookingDate}"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="table2" class="tabcontent hidden">
+    <table>
+      <tr>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Дата бронирования</th>
+        <th>Дата окончания бронирования</th>
+      </tr>
+      <tr th:each="bookGivenAway : ${booksGivenAway}">
+        <td th:text="${bookGivenAway.book.title}"></td>
+        <td th:text="${bookGivenAway.book.author}"></td>
+        <td th:text="${bookGivenAway.givenAwayDate}"></td>
+        <td th:text="${bookGivenAway.returnDate}"></td>
+      </tr>
+    </table>
+  </div>
+
   <a href="/" class="btn btn-primary btn-back">Назад к поиску</a>
 </div>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].classList.add('hidden');
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).classList.remove('hidden');
+    evt.currentTarget.className += " active";
+  }
+</script>
 </body>
 </html>

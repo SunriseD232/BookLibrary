@@ -31,9 +31,12 @@ public class BookController {
         .collect(Collectors.toList());
 
     model.addAttribute("books", books);
-
     model.addAttribute("username", userDetails.getUsername());
     return "books";
   }
 
+  @PostMapping("/return-book")
+  public void returnBook(@RequestParam String username, @RequestParam Long bookGivenAwayId) {
+    bookService.returnBook(username,bookGivenAwayId);
+  }
 }
