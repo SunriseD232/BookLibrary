@@ -9,10 +9,4 @@ public class UserLibApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UserLibApplication.class, args);
 	}
-
-
-//	todo:
-// проверить работоспособность schedule
-// проверить клиентский путь
-
 }
