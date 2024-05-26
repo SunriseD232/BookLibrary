@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -49,6 +50,7 @@ public class ProfileController {
         List<BookGivenAwayImpl> booksGivenAway = bookGiveAwayService.findGiveAwayByUser(user);
         //Включать только для проверки штрафной системы
         //userService.strikeUser();
+        model.addAttribute("isBlocked", user.getIsBlocked());
         model.addAttribute("bookings", bookings);
         model.addAttribute("username", user.getUsername());
         model.addAttribute("booksGivenAway", booksGivenAway);
@@ -60,5 +62,14 @@ public class ProfileController {
     } else {
       return "/admin";
     }
+  }
+
+  @PostMapping("/pay-fine")
+  public String payFine(@RequestParam String username) {
+    UserImpl user = userService.findUserByUsername(username);
+    user.setIsBlocked(false);
+    user.setStrike(0);
+    userService.saveUser(user);
+    return "redirect:/userprofile?username=" + username;
   }
 }

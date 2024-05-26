@@ -57,9 +57,37 @@
       background-color: #f5f5f5;
     }
 
-    .btn {
+    .blocked-message {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .btn-pay-fine {
       display: inline-block;
       padding: 10px 20px;
+      background-color: #ff6347;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-pay-fine:hover {
+      background-color: #d32f2f;
+    }
+
+    .btn-pay-fine.disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-return {
+      display: inline-block;
+      padding: 8px 16px;
       background-color: #4CAF50;
       color: white;
       text-decoration: none;
@@ -68,15 +96,41 @@
       margin-right: 5px;
     }
 
-    .btn:hover {
+    .btn-return:hover {
       background-color: #45a049;
     }
+
+    .btn-book {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      margin-right: 5px;
+    }
+
+    .btn-book:hover {
+      background-color: #45a049;
+    }
+
   </style>
 </head>
 <body>
 <div class="profile-container">
   <h1>Профиль пользователя:</h1>
   <div class="username" th:text="${username}"></div>
+
+  <!-- Проверка флага isBlocked и наличия книг в блоке "Выданы" -->
+  <div class="blocked-message" th:if="${isBlocked && booksGivenAway.size() > 0}">
+    <p>Пользователь заблокирован. Штраф должен быть оплачен.</p>
+    <a href="#" class="btn btn-primary btn-pay-fine disabled" th:data-username="${username}">Штраф выплачен</a>
+  </div>
+  <div class="blocked-message" th:if="${isBlocked && booksGivenAway.size() == 0}">
+    <p>Пользователь заблокирован. Штраф должен быть оплачен.</p>
+    <a href="#" class="btn btn-primary btn-pay-fine" th:data-username="${username}">Штраф выплачен</a>
+  </div>
 
   <div class="columns">
     <div class="column">
@@ -161,6 +215,22 @@
           username: usernamevar,
           bookingId: bookingId
         },
+        success: function(data) {
+          console.log(data);
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    });
+
+    $(".btn-pay-fine").click(function() {
+      var usernamevar = $(this).data("username");
+
+      $.ajax({
+        type: "POST",
+        url: "/pay-fine?username=" + usernamevar,
         success: function(data) {
           console.log(data);
           location.reload();
