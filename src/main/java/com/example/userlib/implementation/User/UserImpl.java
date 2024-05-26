@@ -10,7 +10,8 @@ import lombok.Data;
 
 @Entity
 @Data
-public class UserImpl{
+public class UserImpl {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -18,4 +19,6 @@ public class UserImpl{
   private String password;
   @Enumerated(EnumType.STRING)
   private ROLE role;
+  private Integer strike = 0;
+  private Boolean isBlocked = false;
 }

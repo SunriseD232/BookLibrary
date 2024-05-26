@@ -13,31 +13,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 public class AuthController {
+
   @Autowired
   private UserServiceImpl userService;
 
   @GetMapping("/register")
-  public String showRegisterForm(){
+  public String showRegisterForm() {
     return "register";
   }
 
   @PostMapping("/register")
-  public String registerUser(@ModelAttribute UserImpl user){
+  public String registerUser(@ModelAttribute UserImpl user) {
     user.setRole(ROLE.USER);
 
     userService.saveUser(user);
-    return  "redirect:/login";
+    return "redirect:/login";
   }
 
   @GetMapping("/login")
-  public String showLoginForm(){
+  public String showLoginForm() {
     return "login";
   }
 
   @GetMapping("/FAQ")
-  public String showFAQForm(){
+  public String showFAQForm() {
     return "FAQ";
   }
-
-
 }

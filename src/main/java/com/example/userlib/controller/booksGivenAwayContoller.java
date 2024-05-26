@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class booksGivenAwayContoller {
+
   @Autowired
   private UserServiceImpl userService;
 
@@ -17,7 +18,7 @@ public class booksGivenAwayContoller {
   private BookGiveAwayService bookGiveAwayService;
 
   @PostMapping("/give-book")
-  public String booksGivenAway  (@RequestParam String username, @RequestParam Long bookingId, Model model){
+  public String booksGivenAway(@RequestParam String username, @RequestParam Long bookingId) {
 
     bookGiveAwayService.giveAway(userService.findUserByUsername(username), bookingId);
     return "redirect:/userprofile?username=" + username;

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
   @Autowired
   private CustomUserDetailsService userDetailsService;
 
@@ -21,34 +22,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-          .antMatchers("/register","/h2-confole/**").permitAll()
-          .anyRequest().authenticated()
-          .and()
+        .antMatchers("/register", "/h2-confole/**").permitAll()
+        .anyRequest().authenticated()
+        .and()
         .formLogin()
-          .loginPage("/login")
-          .defaultSuccessUrl("/")
-          .permitAll()
-          .and()
+        .loginPage("/login")
+        .defaultSuccessUrl("/")
+        .permitAll()
+        .and()
         .logout()
-          .logoutUrl("/logout")
-          .logoutSuccessUrl("/login")
-          .invalidateHttpSession(true)
-          .deleteCookies("JSESSIONID")
-          .permitAll();
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/login")
+        .invalidateHttpSession(true)
+        .deleteCookies("JSESSIONID")
+        .permitAll();
 
     http.csrf().disable();
     http.headers().frameOptions().disable();
   }
 
   @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception  {
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder(){
+  public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-
-
 }

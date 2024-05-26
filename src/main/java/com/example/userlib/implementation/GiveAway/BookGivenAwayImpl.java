@@ -14,12 +14,13 @@ import lombok.Data;
 @Entity
 @Data
 public class BookGivenAwayImpl {
+
   @Id
-  @GeneratedValue(strategy  = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name="user_id", nullable = false)
+  @JoinColumn(name = "user_id", nullable = false)
   private UserImpl user;
 
   @ManyToOne
@@ -29,15 +30,14 @@ public class BookGivenAwayImpl {
   private LocalDate givenAwayDate;
   private LocalDate returnDate;
 
-  public BookGivenAwayImpl(){
+  public BookGivenAwayImpl() {
   }
 
-  public BookGivenAwayImpl(UserImpl user, Book book, LocalDate givenAwayDate, LocalDate returnDate){
+  public BookGivenAwayImpl(UserImpl user, Book book, LocalDate givenAwayDate,
+      LocalDate returnDate) {
     this.user = user;
-    this.book =book;
-    this.givenAwayDate  = givenAwayDate;
+    this.book = book;
+    this.givenAwayDate = givenAwayDate;
     this.returnDate = returnDate;
   }
-
-
 }

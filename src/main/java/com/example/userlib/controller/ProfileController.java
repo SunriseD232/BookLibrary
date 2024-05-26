@@ -40,24 +40,25 @@ public class ProfileController {
   }
 
   @GetMapping("/userprofile")
-  public String showUserProfile(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(required = false) String username, Model model){
-    if(userService.findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN){
+  public String showUserProfile(@AuthenticationPrincipal UserDetails userDetails,
+      @RequestParam(required = false) String username, Model model) {
+    if (userService.findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN) {
       try {
         UserImpl user = userService.findUserByUsername(username);
         List<Booking> bookings = bookingService.findBookingsByUser(user);
         List<BookGivenAwayImpl> booksGivenAway = bookGiveAwayService.findGiveAwayByUser(user);
+        //Включать только для проверки штрафной системы
+        //userService.strikeUser();
         model.addAttribute("bookings", bookings);
         model.addAttribute("username", user.getUsername());
         model.addAttribute("booksGivenAway", booksGivenAway);
         return "userProfile";
-      }
-      catch (Exception e){
+      } catch (Exception e) {
+        System.out.println(e);
         return "/admin";
       }
-    }
-    else{
+    } else {
       return "/admin";
     }
   }
-
 }

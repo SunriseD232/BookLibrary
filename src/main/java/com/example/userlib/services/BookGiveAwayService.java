@@ -13,25 +13,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BookGiveAwayService {
-@Autowired
+
+  @Autowired
   private BookGiveAwayRepository bookGiveAwayRepository;
 
-@Autowired
+  @Autowired
   private BookingRepository bookingRepository;
 
-@Autowired
-private BookRepository bookRepository;
+  @Autowired
+  private BookRepository bookRepository;
 
-public void giveAway(UserImpl user, Long BookingId) {
-  Book book = bookRepository.findFirstById(bookingRepository.findFirstById(BookingId).getBook().getId());
-  bookingRepository.deleteById(BookingId);
-  LocalDate now = LocalDate.now();
-  BookGivenAwayImpl bookGivenAway = new BookGivenAwayImpl(user, book, now, now.plusWeeks(5));
-  bookGiveAwayRepository.save(bookGivenAway);
-
+  public void giveAway(UserImpl user, Long BookingId) {
+    Book book = bookRepository.findFirstById(
+        bookingRepository.findFirstById(BookingId).getBook().getId());
+    bookingRepository.deleteById(BookingId);
+    LocalDate now = LocalDate.now();
+    BookGivenAwayImpl bookGivenAway = new BookGivenAwayImpl(user, book, now, now.plusWeeks(5));
+    bookGiveAwayRepository.save(bookGivenAway);
   }
 
-  public List<BookGivenAwayImpl> findGiveAwayByUser(UserImpl user){
+  public List<BookGivenAwayImpl> findGiveAwayByUser(UserImpl user) {
     return bookGiveAwayRepository.findByUser(user);
   }
 }

@@ -15,12 +15,10 @@ public class SearchUserController {
   private UserServiceImpl userService;
 
   @GetMapping("/admin")
-  public String showAdminSearch(@AuthenticationPrincipal UserDetails userDetails){
-    if (userService.findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN){
+  public String showAdminSearch(@AuthenticationPrincipal UserDetails userDetails) {
+    if (userService.findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN) {
       return "admin";
     }
     return "/FAQ";
   }
-
-
 }
