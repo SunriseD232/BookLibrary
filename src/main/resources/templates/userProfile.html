@@ -3,34 +3,6 @@
 <head>
   <title>Profile</title>
   <style>
-    /* Стили для вкладок */
-    .tab {
-      overflow: hidden;
-      border: 1px solid #ccc;
-      background-color: #f1f1f1;
-    }
-
-    .tab button {
-      background-color: inherit;
-      float: left;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 10px 20px;
-      transition: 0.3s;
-    }
-
-    .tab button.active {
-      background-color: #ccc;
-    }
-
-    .tabcontent {
-      padding: 6px 12px;
-      border: 1px solid #ccc;
-      border-top: none;
-    }
-
-    /* Остальные стили */
     body {
       font-family: Arial, sans-serif;
       background-color: #f2f2f2;
@@ -54,6 +26,19 @@
       font-size: 24px;
       color: #666;
       margin-bottom: 20px;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+    }
+
+    .column {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     table {
@@ -93,71 +78,53 @@
   <h1>Профиль пользователя:</h1>
   <div class="username" th:text="${username}"></div>
 
-  <div class="tab">
-    <button class="tablinks active" onclick="openTab(event, 'Booking')">Бронь</button>
-    <button class="tablinks" onclick="openTab(event, 'GivenAway')">Выданы</button>
-  </div>
-
-  <div id="Booking" class="tabcontent" style="display: block;">
-    <table>
-      <tr>
-        <th>Название</th>
-        <th>Автор</th>
-        <th>Дата бронирования</th>
-        <th>Дата окончания бронирования</th>
-        <th>Действия</th>
-      </tr>
-      <tr th:each="booking : ${bookings}">
-        <td th:text="${booking.book.title}"></td>
-        <td th:text="${booking.book.author}"></td>
-        <td th:text="${booking.bookingDate}"></td>
-        <td th:text="${booking.endBookingDate}"></td>
-        <td>
-          <a href="#" th:class="'btn btn-primary btn-book'" th:data-booking-id="${booking.id}"
-             th:data-username="${username}">Выдать</a>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <div id="GivenAway" class="tabcontent" style="display: none;">
-    <table>
-      <tr>
-        <th>Название</th>
-        <th>Автор</th>
-        <th>Дата бронирования</th>
-        <th>Дата окончания бронирования</th>
-        <th>Действия</th>
-      </tr>
-      <tr th:each="bookGivenAway : ${booksGivenAway}">
-        <td th:text="${bookGivenAway.book.title}"></td>
-        <td th:text="${bookGivenAway.book.author}"></td>
-        <td th:text="${bookGivenAway.givenAwayDate}"></td>
-        <td th:text="${bookGivenAway.returnDate}"></td>
-        <td>
-          <a href="#" th:class="'btn btn-primary btn-return'" th:data-bookgivenaway-id="${bookGivenAway.id}"
-             th:data-username="${username}">Вернуть</a>
-        </td>
-      </tr>
-    </table>
+  <div class="columns">
+    <div class="column">
+      <h2>Бронь</h2>
+      <table>
+        <tr>
+          <th>Название</th>
+          <th>Автор</th>
+          <th>Дата бронирования</th>
+          <th>Дата окончания бронирования</th>
+          <th>Действия</th>
+        </tr>
+        <tr th:each="booking : ${bookings}">
+          <td th:text="${booking.book.title}"></td>
+          <td th:text="${booking.book.author}"></td>
+          <td th:text="${booking.bookingDate}"></td>
+          <td th:text="${booking.endBookingDate}"></td>
+          <td>
+            <a href="#" class="btn btn-primary btn-book" th:data-booking-id="${booking.id}"
+               th:data-username="${username}">Выдать</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="column">
+      <h2>Выданы</h2>
+      <table>
+        <tr>
+          <th>Название</th>
+          <th>Автор</th>
+          <th>Дата бронирования</th>
+          <th>Дата окончания бронирования</th>
+          <th>Действия</th>
+        </tr>
+        <tr th:each="bookGivenAway : ${booksGivenAway}">
+          <td th:text="${bookGivenAway.book.title}"></td>
+          <td th:text="${bookGivenAway.book.author}"></td>
+          <td th:text="${bookGivenAway.givenAwayDate}"></td>
+          <td th:text="${bookGivenAway.returnDate}"></td>
+          <td>
+            <a href="#" class="btn btn-primary btn-return" th:data-bookgivenaway-id="${bookGivenAway.id}"
+               th:data-username="${username}">Вернуть</a>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
-
-<script>
-  function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].classList.add('hidden');
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).classList.remove('hidden');
-    evt.currentTarget.className += " active";
-  }
-</script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -166,22 +133,41 @@
       var bookGivenAwayId = $(this).data("bookgivenaway-id");
       var usernamevar = $(this).data("username");
 
-      $.post("/return-book?username=" + encodeURIComponent(usernamevar) + "&bookGivenAwayId=" + encodeURIComponent(bookGivenAwayId), function(data) {
-        location.reload();
+      $.ajax({
+        type: "POST",
+        url: "/return-book",
+        data: {
+          username: usernamevar,
+          bookGivenAwayId: bookGivenAwayId
+        },
+        success: function(data) {
+          console.log(data);
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
       });
     });
-  });
-</script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function() {
     $(".btn-book").click(function() {
       var bookingId = $(this).data("booking-id");
       var usernamevar = $(this).data("username");
 
-      $.post("/give-book?username=" + encodeURIComponent(usernamevar) + "&bookingId=" + encodeURIComponent(bookingId), function(data) {
-        location.reload();
+      $.ajax({
+        type: "POST",
+        url: "/give-book",
+        data: {
+          username: usernamevar,
+          bookingId: bookingId
+        },
+        success: function(data) {
+          console.log(data);
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
       });
     });
   });

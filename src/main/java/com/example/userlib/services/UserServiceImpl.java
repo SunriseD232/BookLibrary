@@ -21,5 +21,4 @@ public class UserServiceImpl{
   public UserImpl findUserByUsername(String username){
     return userRepository.findByUsername(username);
   }
-
 }

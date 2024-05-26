@@ -36,7 +36,8 @@ public class BookController {
   }
 
   @PostMapping("/return-book")
-  public void returnBook(@RequestParam String username, @RequestParam Long bookGivenAwayId) {
+  public String returnBook(@RequestParam String username, @RequestParam Long bookGivenAwayId) {
     bookService.returnBook(username,bookGivenAwayId);
+    return "redirect:/userprofile?username=" + username;
   }
 }
