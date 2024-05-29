@@ -1,6 +1,6 @@
-package com.example.userlib.repository;
+package com.example.userlib.Repository;
 
-import com.example.userlib.implementation.book.Book;
+import com.example.userlib.Impl.book.Book;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

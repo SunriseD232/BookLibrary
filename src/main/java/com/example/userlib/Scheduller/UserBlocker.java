@@ -1,6 +1,6 @@
 package com.example.userlib.Scheduller;
 
-import com.example.userlib.services.UserServiceImpl;
+import com.example.userlib.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

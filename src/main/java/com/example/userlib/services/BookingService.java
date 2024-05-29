@@ -1,10 +1,10 @@
-package com.example.userlib.services;
+package com.example.userlib.Services;
 
-import com.example.userlib.repository.BookRepository;
-import com.example.userlib.repository.BookingRepository;
-import com.example.userlib.implementation.Booking.Booking;
-import com.example.userlib.implementation.User.UserImpl;
-import com.example.userlib.implementation.book.Book;
+import com.example.userlib.Repository.BookRepository;
+import com.example.userlib.Repository.BookingRepository;
+import com.example.userlib.Impl.Booking.Booking;
+import com.example.userlib.Impl.User.UserImpl;
+import com.example.userlib.Impl.book.Book;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package com.example.userlib.Config;
 
-import com.example.userlib.services.CustomUserDetailsService;
+import com.example.userlib.Services.CustomUserDetailsService;
+import com.example.userlib.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +19,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private CustomUserDetailsService userDetailsService;
 
+  @Autowired
+  private UserServiceImpl userServiceImpl;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    if (userServiceImpl.findUserByUsername("admin") == null ) {
+      userDetailsService.uploadAdmin();
+    }
+    
     http
         .authorizeRequests()
         .antMatchers("/register", "/h2-confole/**").permitAll()

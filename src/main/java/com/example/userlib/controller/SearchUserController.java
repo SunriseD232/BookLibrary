@@ -1,7 +1,7 @@
 package com.example.userlib.Controller;
 
-import com.example.userlib.implementation.User.ROLE;
-import com.example.userlib.services.UserServiceImpl;
+import com.example.userlib.Impl.User.ROLE;
+import com.example.userlib.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,8 +1,8 @@
 package com.example.userlib.Controller;
 
-import com.example.userlib.services.BookingService;
-import com.example.userlib.implementation.User.UserImpl;
-import com.example.userlib.services.UserServiceImpl;
+import com.example.userlib.Services.BookingService;
+import com.example.userlib.Impl.User.UserImpl;
+import com.example.userlib.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

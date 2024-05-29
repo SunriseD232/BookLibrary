@@ -1,13 +1,16 @@
-package com.example.userlib.services;
+package com.example.userlib.Services;
 
-import com.example.userlib.implementation.GiveAway.BookGivenAwayImpl;
-import com.example.userlib.repository.BookGiveAwayRepository;
-import com.example.userlib.repository.UserRepository;
-import com.example.userlib.implementation.User.UserImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Repository.BookGiveAwayRepository;
+import com.example.userlib.Repository.UserRepository;
+import com.example.userlib.Impl.User.UserImpl;
+import com.example.userlib.sql.UploadAdminSQL;
+import com.example.userlib.sql.UploadBookSQL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

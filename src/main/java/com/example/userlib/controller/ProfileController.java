@@ -1,12 +1,12 @@
 package com.example.userlib.Controller;
 
-import com.example.userlib.implementation.Booking.Booking;
-import com.example.userlib.implementation.GiveAway.BookGivenAwayImpl;
-import com.example.userlib.implementation.User.ROLE;
-import com.example.userlib.implementation.User.UserImpl;
-import com.example.userlib.services.BookGiveAwayService;
-import com.example.userlib.services.BookingService;
-import com.example.userlib.services.UserServiceImpl;
+import com.example.userlib.Impl.Booking.Booking;
+import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.User.ROLE;
+import com.example.userlib.Impl.User.UserImpl;
+import com.example.userlib.Services.BookGiveAwayService;
+import com.example.userlib.Services.BookingService;
+import com.example.userlib.Services.UserServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

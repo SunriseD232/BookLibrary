@@ -1,6 +1,6 @@
-package com.example.userlib.repository;
+package com.example.userlib.Repository;
 
-import com.example.userlib.implementation.User.UserImpl;
+import com.example.userlib.Impl.User.UserImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository  extends JpaRepository<UserImpl, Long> {

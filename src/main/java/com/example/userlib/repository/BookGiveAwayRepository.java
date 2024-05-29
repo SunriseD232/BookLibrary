@@ -1,7 +1,7 @@
-package com.example.userlib.repository;
+package com.example.userlib.Repository;
 
-import com.example.userlib.implementation.GiveAway.BookGivenAwayImpl;
-import com.example.userlib.implementation.User.UserImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.User.UserImpl;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

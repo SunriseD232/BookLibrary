@@ -1,10 +1,12 @@
-package com.example.userlib.services;
+package com.example.userlib.Services;
 
-import com.example.userlib.repository.UserRepository;
-import com.example.userlib.implementation.User.UserImpl;
+import com.example.userlib.Repository.UserRepository;
+import com.example.userlib.Impl.User.UserImpl;
+import com.example.userlib.sql.UploadAdminSQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
@@ -31,5 +35,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     builder.roles("USER");
     logger.info("User found with name: {}", username);
     return builder.build();
+  }
+
+  public void uploadAdmin(){
+    String script = UploadAdminSQL.UploadAdminScript();
+    jdbcTemplate.execute(script);
   }
 }

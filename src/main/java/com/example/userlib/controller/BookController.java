@@ -1,8 +1,8 @@
 package com.example.userlib.Controller;
 
-import com.example.userlib.implementation.book.Book;
-import com.example.userlib.services.BookService;
-import com.example.userlib.services.UserServiceImpl;
+import com.example.userlib.Impl.book.Book;
+import com.example.userlib.Services.BookService;
+import com.example.userlib.Services.UserServiceImpl;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +27,11 @@ public class BookController {
   @PostMapping("/books")
   public String searchBooks(@AuthenticationPrincipal UserDetails userDetails,
       @RequestParam(required = false) String keyword, Model model) {
+    List<Book> checkBookData = bookService.findAll();
+    if (checkBookData.size() == 0){
+      bookService.uploadBook();
+    }
+
     if (userService.findUserByUsername(userDetails.getUsername()).getIsBlocked() == Boolean.FALSE) {
       List<Book> books;
       if (keyword == null || keyword.isEmpty()) {
