@@ -57,8 +57,6 @@ public class BookService {
       book.setCount(book.getCount() + 1);
       bookRepository.save(book);
       bookingRepository.deleteById(booking.getId());
-
     }
-
   }
 }

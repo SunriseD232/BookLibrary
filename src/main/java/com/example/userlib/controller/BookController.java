@@ -2,10 +2,9 @@ package com.example.userlib.Controller;
 
 import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Services.BookService;
+import com.example.userlib.Services.BookViewService;
 import com.example.userlib.Services.UserServiceImpl;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,25 +22,15 @@ public class BookController {
   @Autowired
   private UserServiceImpl userService;
 
+  @Autowired
+  private BookViewService bookViewService;
 
   @PostMapping("/books")
   public String searchBooks(@AuthenticationPrincipal UserDetails userDetails,
       @RequestParam(required = false) String keyword, Model model) {
-    List<Book> checkBookData = bookService.findAll();
-    if (checkBookData.size() == 0){
-      bookService.uploadBook();
-    }
 
     if (userService.findUserByUsername(userDetails.getUsername()).getIsBlocked() == Boolean.FALSE) {
-      List<Book> books;
-      if (keyword == null || keyword.isEmpty()) {
-        books = bookService.findAll();
-      } else {
-        books = bookService.findByTitle(keyword);
-      }
-      books = books.stream()
-          .sorted(Comparator.comparing(Book::getTitle))
-          .collect(Collectors.toList());
+      List<Book> books = bookViewService.getBook(keyword);
 
       model.addAttribute("books", books);
       model.addAttribute("username", userDetails.getUsername());
