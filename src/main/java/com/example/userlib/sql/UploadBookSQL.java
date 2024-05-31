@@ -46,5 +46,4 @@ public class UploadBookSQL {
         + "    ('The Lovely Bones', 'Alice Sebold', '2002-01-01', 328, 5);";
     return script;
   }
-
 }

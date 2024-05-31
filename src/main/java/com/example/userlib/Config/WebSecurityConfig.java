@@ -19,15 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private CustomUserDetailsService userDetailsService;
 
-  @Autowired
-  private UserServiceImpl userServiceImpl;
-
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    if (userServiceImpl.findUserByUsername("admin") == null ) {
-      userDetailsService.uploadAdmin();
-    }
-    
     http
         .authorizeRequests()
         .antMatchers("/register", "/h2-confole/**").permitAll()
