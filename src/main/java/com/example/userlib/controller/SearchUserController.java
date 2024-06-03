@@ -1,6 +1,5 @@
 package com.example.userlib.Controller;
 
-import com.example.userlib.Impl.User.ROLE;
 import com.example.userlib.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +15,7 @@ public class SearchUserController {
 
   @GetMapping("/admin")
   public String showAdminSearch(@AuthenticationPrincipal UserDetails userDetails) {
-    if (userService.findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN) {
+    if (userService.isAdmin(userDetails)==true) {
       return "admin";
     }
     return "/FAQ";

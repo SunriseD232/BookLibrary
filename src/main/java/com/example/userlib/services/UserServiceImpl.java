@@ -1,16 +1,15 @@
 package com.example.userlib.Services;
 
 import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.User.ROLE;
 import com.example.userlib.Repository.BookGiveAwayRepository;
 import com.example.userlib.Repository.UserRepository;
 import com.example.userlib.Impl.User.UserImpl;
-import com.example.userlib.sql.UploadAdminSQL;
-import com.example.userlib.sql.UploadBookSQL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +33,19 @@ public class UserServiceImpl {
 
   public UserImpl findUserByUsername(String username) {
     return userRepository.findByUsername(username);
+  }
+
+  public Boolean isAdmin(UserDetails userDetails){
+    if(findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  public List<UserImpl> findAllUsers(){
+    return userRepository.findAll();
   }
 
   public void strikeUser() {

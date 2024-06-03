@@ -15,7 +15,7 @@ public class CustomUserScheduler {
 
   @Autowired
   private UserServiceImpl userService;
-
+  // "*/10 * * * * *" - для проверки каждые 10 секунд
   @Scheduled(cron = "0 0 0 * * ?")
   public void checkAndModifyDatabase() {
     logger.info("Start check user");

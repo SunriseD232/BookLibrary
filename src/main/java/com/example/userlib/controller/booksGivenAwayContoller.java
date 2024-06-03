@@ -22,6 +22,4 @@ public class booksGivenAwayContoller {
     bookGiveAwayService.giveAway(userService.findUserByUsername(username), bookingId);
     return "redirect:/userprofile?username=" + username;
   }
-
-
 }
