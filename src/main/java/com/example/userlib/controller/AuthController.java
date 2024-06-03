@@ -26,7 +26,7 @@ public class AuthController {
   public String registerUser(@ModelAttribute UserImpl user) {
     user.setRole(ROLE.USER);
 
-    userService.saveUser(user);
+    userService.saveUserWithEcnoder(user);
     return "redirect:/login";
   }
 

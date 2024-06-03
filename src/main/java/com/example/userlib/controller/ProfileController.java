@@ -1,7 +1,7 @@
 package com.example.userlib.Controller;
 
 import com.example.userlib.Impl.Booking.Booking;
-import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAway;
 import com.example.userlib.Impl.User.ROLE;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Services.BookGiveAwayService;
@@ -34,7 +34,7 @@ public class ProfileController {
 
     UserImpl user = userService.findUserByUsername(userDetails.getUsername());
     List<Booking> bookings = bookingService.findBookingsByUser(user);
-    List<BookGivenAwayImpl> booksGivenAway = bookGiveAwayService.findGiveAwayByUser(user);
+    List<BookGivenAway> booksGivenAway = bookGiveAwayService.findGiveAwayByUser(user);
     model.addAttribute("booksGivenAway", booksGivenAway);
     model.addAttribute("bookings", bookings);
     return "profile";
@@ -47,9 +47,7 @@ public class ProfileController {
       try {
         UserImpl user = userService.findUserByUsername(username);
         List<Booking> bookings = bookingService.findBookingsByUser(user);
-        List<BookGivenAwayImpl> booksGivenAway = bookGiveAwayService.findGiveAwayByUser(user);
-        //Включать только для проверки штрафной системы
-        //userService.strikeUser();
+        List<BookGivenAway> booksGivenAway = bookGiveAwayService.findGiveAwayByUser(user);
         model.addAttribute("isBlocked", user.getIsBlocked());
         model.addAttribute("bookings", bookings);
         model.addAttribute("username", user.getUsername());

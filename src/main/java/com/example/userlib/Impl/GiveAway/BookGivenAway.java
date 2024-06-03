@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class BookGivenAwayImpl {
+public class BookGivenAway {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,10 @@ public class BookGivenAwayImpl {
   private LocalDate givenAwayDate;
   private LocalDate returnDate;
 
-  public BookGivenAwayImpl() {
+  public BookGivenAway() {
   }
 
-  public BookGivenAwayImpl(UserImpl user, Book book, LocalDate givenAwayDate,
+  public BookGivenAway(UserImpl user, Book book, LocalDate givenAwayDate,
       LocalDate returnDate) {
     this.user = user;
     this.book = book;

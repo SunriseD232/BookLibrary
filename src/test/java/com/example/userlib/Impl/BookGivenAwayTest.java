@@ -1,7 +1,7 @@
 package com.example.userlib.Impl;
 
 import com.example.userlib.DataUtils;
-import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAway;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Repository.BookGiveAwayRepository;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-class BookGivenAwayImplTest {
+class BookGivenAwayTest {
 
   @Autowired
   private TestEntityManager entityManager;
@@ -47,12 +47,12 @@ class BookGivenAwayImplTest {
     LocalDate returnDate = LocalDate.now().plusWeeks(2);
 
     // Act
-    BookGivenAwayImpl bookGivenAway = new BookGivenAwayImpl(user, book, givenAwayDate, returnDate);
+    BookGivenAway bookGivenAway = new BookGivenAway(user, book, givenAwayDate, returnDate);
     entityManager.persist(bookGivenAway);
     entityManager.flush();
 
     // Assert
-    BookGivenAwayImpl foundBookGivenAway = bookGiveAwayRepository.findById(bookGivenAway.getId()).orElse(null);
+    BookGivenAway foundBookGivenAway = bookGiveAwayRepository.findById(bookGivenAway.getId()).orElse(null);
     assertNotNull(foundBookGivenAway);
     assertEquals(user, foundBookGivenAway.getUser());
     assertEquals(book, foundBookGivenAway.getBook());

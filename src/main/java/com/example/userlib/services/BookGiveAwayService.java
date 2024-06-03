@@ -1,6 +1,6 @@
 package com.example.userlib.Services;
 
-import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAway;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Repository.BookGiveAwayRepository;
@@ -28,11 +28,11 @@ public class BookGiveAwayService {
         bookingRepository.findFirstById(BookingId).getBook().getId());
     bookingRepository.deleteById(BookingId);
     LocalDate now = LocalDate.now();
-    BookGivenAwayImpl bookGivenAway = new BookGivenAwayImpl(user, book, now, now.plusWeeks(5));
+    BookGivenAway bookGivenAway = new BookGivenAway(user, book, now, now.plusWeeks(5));
     bookGiveAwayRepository.save(bookGivenAway);
   }
 
-  public List<BookGivenAwayImpl> findGiveAwayByUser(UserImpl user) {
+  public List<BookGivenAway> findGiveAwayByUser(UserImpl user) {
     return bookGiveAwayRepository.findByUser(user);
   }
 }

@@ -1,6 +1,6 @@
 package com.example.userlib.Services;
 
-import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAway;
 import com.example.userlib.Impl.User.ROLE;
 import com.example.userlib.Repository.BookGiveAwayRepository;
 import com.example.userlib.Repository.UserRepository;
@@ -26,8 +26,12 @@ public class UserServiceImpl {
   private BookingService bookingService;
 
 
-  public UserImpl saveUser(UserImpl user) {
+  public UserImpl saveUserWithEcnoder(UserImpl user) {
     user.setPassword(passwordEncoder.encode((user.getPassword())));
+    return userRepository.save(user);
+  }
+
+  public UserImpl saveUser(UserImpl user) {
     return userRepository.save(user);
   }
 
@@ -49,22 +53,23 @@ public class UserServiceImpl {
   }
 
   public void strikeUser() {
-    List<UserImpl> users = findUserWithExpiredBook();
-    for (UserImpl user : users) {
+    List<UserImpl> usersExpired = findUserWithExpiredBook();
+    for (UserImpl user : usersExpired) {
       user.setStrike(user.getStrike() + 1);
       if (user.getStrike() >= 5) {
         blockUser(user);
-        userRepository.save(user);
       }
+      userRepository.save(user);
+
     }
   }
 
   public List<UserImpl> findUserWithExpiredBook() {
     LocalDate now = LocalDate.now();
-    List<BookGivenAwayImpl> BookingReturnDateExpired = bookGiveAwayRepository.findAllWhereReturnDateMore(
+    List<BookGivenAway> BookingReturnDateExpired = bookGiveAwayRepository.findAllWhereReturnDateMore(
         now);
     List<UserImpl> UserExpired = new ArrayList();
-    for (BookGivenAwayImpl BookGivenAway : BookingReturnDateExpired) {
+    for (com.example.userlib.Impl.GiveAway.BookGivenAway BookGivenAway : BookingReturnDateExpired) {
       UserExpired.add(BookGivenAway.getUser());
     }
     return UserExpired;
@@ -72,6 +77,8 @@ public class UserServiceImpl {
 
   public void blockUser(UserImpl user) {
     user.setIsBlocked(Boolean.TRUE);
-    bookingService.deleteBookings(user);
+    if (bookingService.findBookingsByUser(user).size() != 0) {
+      bookingService.deleteBookings(user);
+    }
   }
 }

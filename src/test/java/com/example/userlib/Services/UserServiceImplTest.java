@@ -1,12 +1,10 @@
 package com.example.userlib.Services;
 
-import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAway;
 import com.example.userlib.Impl.User.ROLE;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Repository.BookGiveAwayRepository;
 import com.example.userlib.Repository.UserRepository;
-import com.example.userlib.Services.BookingService;
-import com.example.userlib.Services.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,8 +53,7 @@ class UserServiceImplTest {
   @Test
   void testSaveUser() {
     when(passwordEncoder.encode("testpassword")).thenReturn("encodedPassword");
-    System.out.println(user);
-    userService.saveUser(user);
+    userService.saveUserWithEcnoder(user);
 
     assertEquals("encodedPassword", user.getPassword());
     verify(userRepository).save(user);
@@ -85,8 +82,8 @@ class UserServiceImplTest {
 
     when(bookGiveAwayRepository.findAllWhereReturnDateMore(any(LocalDate.class)))
         .thenReturn(Arrays.asList(
-            new BookGivenAwayImpl(user1, null, LocalDate.now().minusDays(10), LocalDate.now()),
-            new BookGivenAwayImpl(user2, null, LocalDate.now().minusDays(15), LocalDate.now())
+            new BookGivenAway(user1, null, LocalDate.now().minusDays(10), LocalDate.now()),
+            new BookGivenAway(user2, null, LocalDate.now().minusDays(15), LocalDate.now())
         ));
 
     userService.strikeUser();

@@ -1,13 +1,12 @@
 package com.example.userlib.Services;
 
 import com.example.userlib.Impl.Booking.Booking;
-import com.example.userlib.Impl.GiveAway.BookGivenAwayImpl;
+import com.example.userlib.Impl.GiveAway.BookGivenAway;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Repository.BookGiveAwayRepository;
 import com.example.userlib.Repository.BookRepository;
 import com.example.userlib.Repository.BookingRepository;
-import com.example.userlib.Services.BookGiveAwayService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,17 +59,17 @@ class BookGiveAwayServiceTest {
 
     // Assert
     verify(bookingRepository).deleteById(1L);
-    verify(bookGiveAwayRepository).save(any(BookGivenAwayImpl.class));
+    verify(bookGiveAwayRepository).save(any(BookGivenAway.class));
   }
 
   @Test
   void testFindGiveAwayByUser() {
     // Arrange
-    List<BookGivenAwayImpl> giveAways = Arrays.asList(new BookGivenAwayImpl(), new BookGivenAwayImpl());
+    List<BookGivenAway> giveAways = Arrays.asList(new BookGivenAway(), new BookGivenAway());
     when(bookGiveAwayRepository.findByUser(user)).thenReturn(giveAways);
 
     // Act
-    List<BookGivenAwayImpl> result = bookGiveAwayService.findGiveAwayByUser(user);
+    List<BookGivenAway> result = bookGiveAwayService.findGiveAwayByUser(user);
 
     // Assert
     assertEquals(giveAways, result);

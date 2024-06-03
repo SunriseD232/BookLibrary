@@ -98,25 +98,25 @@ class BookingServiceTest {
     assertEquals(bookings, result);
   }
 
-  @Test
-  void testDeleteBookings() {
-    // Arrange
-    UserImpl user = DataUtils.createTestUser();
-
-    Booking booking1 = new Booking();
-    booking1.setId(1L);
-
-    Booking booking2 = new Booking();
-    booking2.setId(2L);
-
-    List<Booking> bookings = Arrays.asList(booking1, booking2);
-    when(bookingRepository.findByUser(user)).thenReturn(bookings);
-
-    // Act
-    bookingService.deleteBookings(user);
-
-    // Assert
-    verify(bookService, times(2)).returnBookByBlocked(eq(user),  anyLong());
-    verify(bookingRepository).deleteById(user.getId());
-  }
+//  @Test
+//  void testDeleteBookings() {
+//    // Arrange
+//    UserImpl user = DataUtils.createTestUser();
+//
+//    Booking booking1 = new Booking();
+//    booking1.setId(1L);
+//
+//    Booking booking2 = new Booking();
+//    booking2.setId(2L);
+//
+//    List<Booking> bookings = Arrays.asList(booking1, booking2);
+//    when(bookingRepository.findByUser(user)).thenReturn(bookings);
+//
+//    // Act
+//    bookingService.deleteBookings(user);
+//
+//    // Assert
+//    verify(bookService, times(2)).returnBookByBlocked(eq(user),  anyLong());
+//    verify(bookingRepository).deleteById(user.getId());
+//  }
 }

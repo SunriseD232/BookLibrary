@@ -27,7 +27,7 @@ public class BookService {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
-  public void uploadBook(){
+  public void uploadBook() {
     String script = UploadBookSQL.getScript();
     jdbcTemplate.execute(script);
   }
@@ -49,14 +49,10 @@ public class BookService {
 
   }
 
-  public void returnBookByBlocked(UserImpl user, Long bookingId) {
-    List<Booking> bookings = bookingRepository.findByUser(user);
-    for (Booking booking : bookings) {
-      Book book = booking.getBook();
-
-      book.setCount(book.getCount() + 1);
-      bookRepository.save(book);
-      bookingRepository.deleteById(booking.getId());
-    }
+  public void returnBookByBlocked(Booking booking) {
+    Book book = booking.getBook();
+    book.setCount(book.getCount() + 1);
+    bookingRepository.deleteById(booking.getId());
+    bookRepository.save(book);
   }
 }

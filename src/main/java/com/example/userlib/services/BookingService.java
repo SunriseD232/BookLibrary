@@ -43,9 +43,8 @@ public class BookingService {
     List<Booking> bookings = bookingRepository.findByUser(user);
     if (bookings.size() != 0) {
       for (Booking booking : bookings) {
-        bookService.returnBookByBlocked(user, booking.getId());
+        bookService.returnBookByBlocked(booking);
       }
-      bookingRepository.deleteById(user.getId());
     }
   }
 }
