@@ -60,7 +60,6 @@ public class UserServiceImpl {
         blockUser(user);
       }
       userRepository.save(user);
-
     }
   }
 

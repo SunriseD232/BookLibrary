@@ -4,6 +4,7 @@ import com.example.userlib.Component.CustomUserScheduler;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Services.BookService;
+import com.example.userlib.Services.BookingService;
 import com.example.userlib.Services.UserServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class AdminAPIController {
 
   @Autowired
   private BookService bookService;
+
+  @Autowired
+  private BookingService bookingService;
 
   @GetMapping("/users")
   @ResponseBody
@@ -52,5 +56,11 @@ public class AdminAPIController {
     } else {
       return null;
     }
+  }
+
+  @GetMapping("/deleteExpired")
+  public String deleteExpiredBooking(){
+    bookingService.deleteExpiredBooking();
+    return "Expired bookings deleted";
   }
 }

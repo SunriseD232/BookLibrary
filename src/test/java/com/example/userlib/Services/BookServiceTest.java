@@ -89,18 +89,13 @@ public class BookServiceTest {
     verify(bookGiveAwayRepository).deleteById(Id);
   }
 
-//  @Test
-//  void testReturnBookByBlocked(){
-//    Booking booking = new Booking(user, book, LocalDate.now(), LocalDate.now());
-//    List bookings = new ArrayList<>();
-//    bookings.add(booking);
-//
-//    when(bookingRepository.findByUser(user)).thenReturn(bookings);
-//
-//    bookService.returnBookByBlocked(user, Id);
-//
-//    verify(bookRepository).save(book);
-//    verify(bookingRepository).deleteById(booking.getId());
-//
-//  }
+  @Test
+  void testReturnBookByBlocked(){
+    Booking booking = new Booking(user, book, LocalDate.now(), LocalDate.now());
+
+    bookService.returnBooks(booking);
+
+    verify(bookingRepository).deleteById(booking.getId());
+    verify(bookRepository).save(book);
+  }
 }

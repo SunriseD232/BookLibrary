@@ -49,7 +49,7 @@ public class BookService {
 
   }
 
-  public void returnBookByBlocked(Booking booking) {
+  public void returnBooks(Booking booking) {
     Book book = booking.getBook();
     book.setCount(book.getCount() + 1);
     bookingRepository.deleteById(booking.getId());

@@ -22,6 +22,8 @@ public class BookingService {
   @Autowired
   private BookService bookService;
 
+
+
   public void bookBook(UserImpl user, Long bookId) {
     if (user.getIsBlocked() != Boolean.TRUE) {
       Book book = bookRepository.findFirstById(bookId);
@@ -43,8 +45,15 @@ public class BookingService {
     List<Booking> bookings = bookingRepository.findByUser(user);
     if (bookings.size() != 0) {
       for (Booking booking : bookings) {
-        bookService.returnBookByBlocked(booking);
+        bookService.returnBooks(booking);
       }
+    }
+  }
+
+  public void deleteExpiredBooking(){
+    List<Booking> bookings = bookingRepository.findAllWhereEndBookingDateMore(LocalDate.now());
+    for (Booking booking: bookings)  {
+      bookService.returnBooks(booking);
     }
   }
 }
