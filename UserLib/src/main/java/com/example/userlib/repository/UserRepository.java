@@ -1,11 +1,9 @@
-package com.example.userlib.repository;
+package com.example.userlib.Repository;
 
-import com.example.userlib.services.user.UserImpl;
+import com.example.userlib.Impl.User.UserImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<UserImpl, Long> {
-  UserImpl findByUsername(String username);
-  UserImpl findByEmail(String email);
+public interface UserRepository  extends JpaRepository<UserImpl, Long> {
+
+  UserImpl findByUsername(String login);
 }
