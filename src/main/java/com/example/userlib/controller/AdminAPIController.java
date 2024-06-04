@@ -1,6 +1,5 @@
 package com.example.userlib.Controller;
 
-import com.example.userlib.Component.CustomUserScheduler;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Services.BookService;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class AdminAPIController {
 
-  @Autowired
-  private CustomUserScheduler customUserScheduler;
 
   @Autowired
   private UserServiceImpl userService;
@@ -31,6 +28,8 @@ public class AdminAPIController {
   @Autowired
   private BookingService bookingService;
 
+
+  //todo: написать тест
   @GetMapping("/users")
   @ResponseBody
   public List<UserImpl> getUsers(@AuthenticationPrincipal UserDetails userDetails) {
@@ -44,7 +43,7 @@ public class AdminAPIController {
   @GetMapping("/check-database")
   public String checkDatabase(@AuthenticationPrincipal UserDetails userDetails) {
     if (userService.isAdmin(userDetails) == true) {
-      customUserScheduler.checkAndModifyDatabase();
+      userService.strikeUser();
     }
     return "Database checked and modified";
   }
@@ -59,8 +58,11 @@ public class AdminAPIController {
   }
 
   @GetMapping("/deleteExpired")
-  public String deleteExpiredBooking(){
-    bookingService.deleteExpiredBooking();
+  public String deleteExpiredBooking(@AuthenticationPrincipal UserDetails userDetails) {
+    if (userService.isAdmin(userDetails) == true) {
+      bookingService.deleteExpiredBooking();
+
+    }
     return "Expired bookings deleted";
   }
 }

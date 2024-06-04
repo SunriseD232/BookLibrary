@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BookInitConfig {
+
   @Autowired
   private BookService bookService;
 
