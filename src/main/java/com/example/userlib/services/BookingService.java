@@ -7,21 +7,18 @@ import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.Impl.book.Book;
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BookingService {
 
-  @Autowired
-  private BookingRepository bookingRepository;
+  private final BookingRepository bookingRepository;
 
-  @Autowired
-  private BookRepository bookRepository;
+  private final BookRepository bookRepository;
 
-  @Autowired
-  private BookService bookService;
-
+  private final BookService bookService;
 
 
   public void bookBook(UserImpl user, Long bookId) {
@@ -43,7 +40,7 @@ public class BookingService {
 
   public void deleteBookings(UserImpl user) {
     List<Booking> bookings = bookingRepository.findByUser(user);
-    if (bookings.size() != 0) {
+    if (!bookings.isEmpty()) {
       for (Booking booking : bookings) {
         bookService.returnBooks(booking);
       }

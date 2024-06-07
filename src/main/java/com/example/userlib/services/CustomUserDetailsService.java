@@ -3,15 +3,10 @@ package com.example.userlib.Services;
 import com.example.userlib.Repository.UserRepository;
 import com.example.userlib.Impl.User.UserImpl;
 import com.example.userlib.sql.UploadAdminSQL;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,14 +14,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
+  private final UserRepository userRepository;
+  private final JdbcTemplate jdbcTemplate;
 
   private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

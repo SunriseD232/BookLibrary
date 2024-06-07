@@ -8,22 +8,19 @@ import com.example.userlib.Impl.User.UserImpl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl {
 
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private PasswordEncoder passwordEncoder;
-  @Autowired
-  private BookGiveAwayRepository bookGiveAwayRepository;
-  @Autowired
-  private BookingService bookingService;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+  private final BookGiveAwayRepository bookGiveAwayRepository;
+  private final BookingService bookingService;
 
 
   public UserImpl saveUserWithEcnoder(UserImpl user) {
@@ -40,12 +37,7 @@ public class UserServiceImpl {
   }
 
   public Boolean isAdmin(UserDetails userDetails){
-    if(findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN){
-      return true;
-    }
-    else{
-      return false;
-    }
+    return findUserByUsername(userDetails.getUsername()).getRole() == ROLE.ADMIN;
   }
 
   public List<UserImpl> findAllUsers(){
@@ -67,7 +59,7 @@ public class UserServiceImpl {
     LocalDate now = LocalDate.now();
     List<BookGivenAway> BookingReturnDateExpired = bookGiveAwayRepository.findAllWhereReturnDateMore(
         now);
-    List<UserImpl> UserExpired = new ArrayList();
+    List<UserImpl> UserExpired = new ArrayList<>();
     for (com.example.userlib.Impl.GiveAway.BookGivenAway BookGivenAway : BookingReturnDateExpired) {
       UserExpired.add(BookGivenAway.getUser());
     }
@@ -76,7 +68,7 @@ public class UserServiceImpl {
 
   public void blockUser(UserImpl user) {
     user.setIsBlocked(Boolean.TRUE);
-    if (bookingService.findBookingsByUser(user).size() != 0) {
+    if (!bookingService.findBookingsByUser(user).isEmpty()) {
       bookingService.deleteBookings(user);
     }
   }

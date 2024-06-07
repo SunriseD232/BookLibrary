@@ -83,7 +83,7 @@ public class BookServiceTest {
         bookGivenAway
     );
 
-    bookService.returnBook(testString, Id);
+    bookService.returnBook(Id);
 
     verify(bookRepository).save(book);
     verify(bookGiveAwayRepository).deleteById(Id);

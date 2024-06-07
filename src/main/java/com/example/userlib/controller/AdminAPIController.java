@@ -6,7 +6,7 @@ import com.example.userlib.Services.BookService;
 import com.example.userlib.Services.BookingService;
 import com.example.userlib.Services.UserServiceImpl;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,25 +15,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class AdminAPIController {
 
+  private final UserServiceImpl userService;
 
-  @Autowired
-  private UserServiceImpl userService;
+  private final BookService bookService;
 
-  @Autowired
-  private BookService bookService;
-
-  @Autowired
-  private BookingService bookingService;
+  private final BookingService bookingService;
 
 
-  //todo: написать тест
   @GetMapping("/users")
   @ResponseBody
   public List<UserImpl> getUsers(@AuthenticationPrincipal UserDetails userDetails) {
-    if (userService.isAdmin(userDetails) == true) {
+    if (userService.isAdmin(userDetails)) {
       return userService.findAllUsers();
     } else {
       return null;
@@ -42,7 +38,7 @@ public class AdminAPIController {
 
   @GetMapping("/check-database")
   public String checkDatabase(@AuthenticationPrincipal UserDetails userDetails) {
-    if (userService.isAdmin(userDetails) == true) {
+    if (userService.isAdmin(userDetails)) {
       userService.strikeUser();
     }
     return "Database checked and modified";
@@ -50,7 +46,7 @@ public class AdminAPIController {
 
   @GetMapping("/books")
   public List<Book> getAllBooks(@AuthenticationPrincipal UserDetails userDetails) {
-    if (userService.isAdmin(userDetails) == true) {
+    if (userService.isAdmin(userDetails)) {
       return bookService.findAll();
     } else {
       return null;
@@ -59,7 +55,7 @@ public class AdminAPIController {
 
   @GetMapping("/deleteExpired")
   public String deleteExpiredBooking(@AuthenticationPrincipal UserDetails userDetails) {
-    if (userService.isAdmin(userDetails) == true) {
+    if (userService.isAdmin(userDetails)) {
       bookingService.deleteExpiredBooking();
 
     }

@@ -4,19 +4,20 @@ import com.example.userlib.Impl.book.Book;
 import com.example.userlib.Services.BookService;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class BookInitConfig {
 
-  @Autowired
-  private BookService bookService;
+  private final BookService bookService;
+
 
   @PostConstruct
   public void initBooks() {
   List<Book> checkBookData = bookService.findAll();
-    if (checkBookData.size() == 0) {
+    if (checkBookData.isEmpty()) {
       bookService.uploadBook();
     }
   }

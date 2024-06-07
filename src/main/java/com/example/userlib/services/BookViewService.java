@@ -4,13 +4,13 @@ import com.example.userlib.Impl.book.Book;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BookViewService {
-  @Autowired
-  private BookService bookService;
+  private final BookService bookService;
 
   public List<Book> getBook(String keyword){
     List<Book> books;
@@ -21,7 +21,7 @@ public class BookViewService {
     }
     books = books.stream()
         .sorted(Comparator.comparing(Book::getTitle))
-        .collect(Collectors.toList());
+        .toList();
     return books;
   }
 

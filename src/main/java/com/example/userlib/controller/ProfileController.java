@@ -8,7 +8,7 @@ import com.example.userlib.Services.BookGiveAwayService;
 import com.example.userlib.Services.BookingService;
 import com.example.userlib.Services.UserServiceImpl;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,16 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class ProfileController {
 
-  @Autowired
-  private BookingService bookingService;
+  private final BookingService bookingService;
 
-  @Autowired
-  private UserServiceImpl userService;
+  private final UserServiceImpl userService;
 
-  @Autowired
-  private BookGiveAwayService bookGiveAwayService;
+  private final BookGiveAwayService bookGiveAwayService;
+
 
   @GetMapping("/profile")
   public String showProfile(@AuthenticationPrincipal UserDetails userDetails, Model model) {

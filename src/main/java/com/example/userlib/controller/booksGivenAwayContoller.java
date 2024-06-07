@@ -2,19 +2,19 @@ package com.example.userlib.Controller;
 
 import com.example.userlib.Services.BookGiveAwayService;
 import com.example.userlib.Services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class booksGivenAwayContoller {
 
-  @Autowired
-  private UserServiceImpl userService;
+  private final UserServiceImpl userService;
 
-  @Autowired
-  private BookGiveAwayService bookGiveAwayService;
+  private final BookGiveAwayService bookGiveAwayService;
+
 
   @PostMapping("/give-book")
   public String booksGivenAway(@RequestParam String username, @RequestParam Long bookingId) {

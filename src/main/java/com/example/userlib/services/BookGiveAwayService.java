@@ -8,20 +8,19 @@ import com.example.userlib.Repository.BookRepository;
 import com.example.userlib.Repository.BookingRepository;
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BookGiveAwayService {
 
-  @Autowired
-  private BookGiveAwayRepository bookGiveAwayRepository;
+  private final BookGiveAwayRepository bookGiveAwayRepository;
 
-  @Autowired
-  private BookingRepository bookingRepository;
+  private final BookingRepository bookingRepository;
 
-  @Autowired
-  private BookRepository bookRepository;
+  private final BookRepository bookRepository;
+
 
   public void giveAway(UserImpl user, Long BookingId) {
     Book book = bookRepository.findFirstById(

@@ -1,7 +1,7 @@
 package com.example.userlib.Config;
 
 import com.example.userlib.Services.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,11 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private CustomUserDetailsService userDetailsService;
+  private final CustomUserDetailsService userDetailsService;
+
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
